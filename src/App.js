@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import Person from './Person/Person';
 import './App.css';
+import Radium, {StyleRoot} from 'radium';
+import Person from './Person/Person';
 
 class App extends Component {
   state = {
     people: [
-      { id: 'g12h', name: 'Anat', age: 29 },
-      { id: 'g2f3', name: 'Roei', age: 31 },
-      { id: '8sh', name: 'Robi', age: 2 }
+      {id: 'g12h', name: 'Anat', age: 29},
+      {id: 'g2f3', name: 'Roei', age: 31},
+      {id: '8sh', name: 'Robi', age: 2}
     ],
     showPersons: false
   };
@@ -41,15 +42,27 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
-      cursor: "pointer"
+      cursor: "pointer",
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     let persons = null;
+
     if (this.state.showPersons) {
+      style.backgroundColor = "red";
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
+
       persons = (
         <div>
           {this.state.people.map((person, index) => (
@@ -65,17 +78,28 @@ class App extends Component {
       )
     }
 
+    const classes = [];
+    if (this.state.people.length <= 2) {
+      classes.push('red')
+    }
+    if (this.state.people.length === 1) {
+      classes.push('bold');
+    }
+
     return (
-      <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <button onClick={this.togglePersonsHandler}
-                style={style}>
-          Toggle Persons
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className="App">
+          <p className={classes.join(' ')}>Hi, I'm a React App</p>
+          <button onClick={this.togglePersonsHandler}
+                  style={style}>
+            Toggle Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   };
 }
 
-export default App;
+export default Radium(App);
+
