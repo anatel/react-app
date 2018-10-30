@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+
+  button {
+    border: 1px solid blue;
+    padding: 10px;
+    background-color: green;
+    font: inherit;
+    cursor: pointer;
+    color: white;
+
+    &:hover {
+      background-color: lightgreen;
+      color: black;
+    }
+
+    &.red {
+      background-color: red;
+
+      &:hover {
+        background-color: salmon;
+        color: black;
+      }
+    }
+  }
+}
