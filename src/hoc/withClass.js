@@ -21,16 +21,33 @@ import React, {Component} from 'react';
 // }
 
 //**HOC WITH STATEFUL COMPONENT - USING ANONYMOUS CLASS
+// const withClass = (WrappedComponent, className) => {
+//   return class extends Component {
+//     render() {
+//       return (
+//         <div className={className}>
+//           <WrappedComponent {...this.props}/>
+//         </div>
+//       )
+//     }
+//   }
+// }
+
+
+//**HOC WITH STATEFUL COMPONENT - USING FORWARD REF
 const withClass = (WrappedComponent, className) => {
-  return class extends Component {
+  const WithClass = class extends Component {
     render() {
       return (
         <div className={className}>
-          <WrappedComponent {...this.props}/>
+          <WrappedComponent {...this.props} ref={this.props.forwardedRef}/>
         </div>
       )
     }
   }
-}
 
+  return React.forwardRef((props, ref) => {
+    return <WithClass {...props} forwardedRef={ref} />
+  })
+}
 export default withClass;
